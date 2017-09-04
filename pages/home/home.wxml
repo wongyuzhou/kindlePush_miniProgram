@@ -1,0 +1,28 @@
+<!--home.wxml-->
+<import src="menu/menu-template.wxml" />
+<import src="book/book-template.wxml" />
+<import src="header/header-template.wxml" />
+
+<view class="container">
+  <swiper>
+    <swiper-item wx:for="{{banners}}">
+      <image class="swiper-image" src="{{item.picUrl}}" mode="scaleToFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <view class="menu">
+    <block wx:for="{{menus}}">
+      <template is="menu" data="{{...item}}"></template>
+    </block>
+  </view>
+
+  <view class="content">
+    <block wx:for="{{books}}">
+      <template is="header" data="{{...item.header}}"></template>
+      <block wx:for="{{item.books}}">
+        <template is="book" data="{{...item}}"></template>
+      </block>
+      <view class="separation"></view>
+    </block>
+  </view>
+</view>

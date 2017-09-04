@@ -1,0 +1,15 @@
+.mall-container{
+height: 300rpx;
+width: 300rpx;
+position: relative;
+}
+.mall-img{
+height: 300rpx;
+width: 300rpx;
+}
+.mall-title{
+  width: 100%;
+  height: 40rpx;
+  position: absolute;
+  bottom: 0rpx;
+}

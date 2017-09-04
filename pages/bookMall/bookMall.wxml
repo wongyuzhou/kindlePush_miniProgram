@@ -1,0 +1,16 @@
+<!--bookMall.wxml-->
+<import src="mall/mall-template.wxml" />
+
+<view class="container">
+  <view class="header-container">
+    <image class="header-img" src="/images/store/allBook_316x95_@2x.png"></image>
+    <text class="header-title">全部图书</text>
+  </view>
+
+  <view class="main-container">
+    <block wx:for="{{categories}}">
+      <template is="mall" data="{{...item}}"></template>
+    </block>
+  </view>
+
+</view>
