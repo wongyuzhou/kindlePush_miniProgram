@@ -51,6 +51,27 @@ Page({
       }
     });
   },
+  toDetail:function(event){
+      var book = event.currentTarget.dataset.book;
+      wx.navigateTo({
+        url: '/pages/bookDetail/bookDetail?book='+JSON.stringify(book),
+      })
+  },
+  toHotPush: function(event){
+    var index=event.currentTarget.dataset.index;
+    if (index==0){
+      wx.navigateTo({
+        url: '/pages/hotPush/hotPush',
+      })
+    }else{
+      wx.showToast({
+        title: '暂无此功能!',
+        duration: 1000,
+
+      })
+    }
+    
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

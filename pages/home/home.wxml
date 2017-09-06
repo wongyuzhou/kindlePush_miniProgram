@@ -4,24 +4,26 @@
 <import src="header/header-template.wxml" />
 
 <view class="container">
-  <swiper>
-    <swiper-item wx:for="{{banners}}">
+  <swiper indicator-dots="{{true}}" indicator-color="#fff" indicator-active-color="#FB7C58">
+    <swiper-item wx:for="{{banners}}" >
       <image class="swiper-image" src="{{item.picUrl}}" mode="scaleToFill"></image>
     </swiper-item>
   </swiper>
 
   <view class="menu">
     <block wx:for="{{menus}}">
-      <template is="menu" data="{{...item}}"></template>
+      <view catchtap="toHotPush" data-index="{{index}}">
+        <template is="menu" data="{{...item}}"></template>
+      </view>
     </block>
   </view>
 
   <view class="content">
     <block wx:for="{{books}}">
       <template is="header" data="{{...item.header}}"></template>
-      <block wx:for="{{item.books}}">
+      <view wx:for="{{item.books}}" catchtap="toDetail" data-book="{{item}}">
         <template is="book" data="{{...item}}"></template>
-      </block>
+      </view>
       <view class="separation"></view>
     </block>
   </view>

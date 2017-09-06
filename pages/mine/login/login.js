@@ -1,33 +1,46 @@
-// mine.js
+// login.js
 Page({
 
-  /**
+  /**  
    * 页面的初始数据
    */
   data: {
-    datas: [
-      [
-        { "name": "我的会员" },
-        { "name": "我的收藏" },
-        { "name": "推送记录" },
-        { "name": "最新活动" }
-      ],
-      [
-        { "name": "版本更新" },
-        { "name": "清空缓存" },
-        { "name": "夜间模式" }
-      ],
-      [
-        { "name": "使用帮助" },
-        { "name": "关于我们" }
-      ]
-    ]
+    account: '',
+    password: ''
+  },
+
+  accountInput: function (event) {
+
+    this.setData({
+      account: event.detail.value
+    });
+  },
+  passwordInput: function (event) {
+
+    this.setData({
+      password: event.detail.value
+    });
   },
   login: function (event) {
-    console.log(event);
-    wx.navigateTo({
-      url: 'login/login',
-    })
+    console.log(this.data);
+    wx.request({
+      url: 'http://www.kindlepush.com/m/login',
+      method: 'POST',
+      header: {
+         'content-type': 'application/x-www-form-urlencoded'
+      },
+      data: { 
+        'username': this.data.account,
+        'password': this.data.password
+      },
+      success: function (res) {
+        console.log(res);
+        wx.setStorageSync('auth', res.data.msg);
+      },
+      fail: function (err) {
+        console.log(err);
+      }
+    });
   },
   /**
    * 生命周期函数--监听页面加载

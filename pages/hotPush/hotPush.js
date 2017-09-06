@@ -1,41 +1,42 @@
-// mine.js
+// hotPush.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    datas: [
-      [
-        { "name": "我的会员" },
-        { "name": "我的收藏" },
-        { "name": "推送记录" },
-        { "name": "最新活动" }
-      ],
-      [
-        { "name": "版本更新" },
-        { "name": "清空缓存" },
-        { "name": "夜间模式" }
-      ],
-      [
-        { "name": "使用帮助" },
-        { "name": "关于我们" }
-      ]
-    ]
+    hotPush: {},
+    titles: { 'month': '月推榜', 'week': '周推榜' }
   },
-  login: function (event) {
-    console.log(event);
-    wx.navigateTo({
-      url: 'login/login',
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.requestData();
   },
 
+  requestData: function () {
+
+    var that = this;
+    wx.request({
+      url: 'http://www.kindlepush.com/m/weekAndMonth',
+      success: function (res) {
+        that.setData({
+          hotPush: res.data,
+        });
+      },
+      fail: function (err) {
+
+      }
+    })
+  },
+  toDetail: function (event) {
+    var book = event.currentTarget.dataset.book;
+    wx.navigateTo({
+      url: '/pages/bookDetail/bookDetail?book=' + JSON.stringify(book),
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

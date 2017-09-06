@@ -9,6 +9,5 @@
                 </view>   
       </view>
        <image class="list-img" src="{{imgUrl}}" mode="aspectFit"></image>
-        
     </view>
 </template>

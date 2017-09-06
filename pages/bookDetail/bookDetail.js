@@ -1,39 +1,46 @@
-// mine.js
+// bookDetail.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    datas: [
-      [
-        { "name": "我的会员" },
-        { "name": "我的收藏" },
-        { "name": "推送记录" },
-        { "name": "最新活动" }
-      ],
-      [
-        { "name": "版本更新" },
-        { "name": "清空缓存" },
-        { "name": "夜间模式" }
-      ],
-      [
-        { "name": "使用帮助" },
-        { "name": "关于我们" }
-      ]
-    ]
+      bookDetail: {},
+      tags: []
   },
-  login: function (event) {
-    console.log(event);
-    wx.navigateTo({
-      url: 'login/login',
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
+    var book=JSON.parse(options.book);
+    var title = book.name;
+    this.requestData(book.id);
+    wx.setNavigationBarTitle({
+      title: title,
+    })
+  },
+  requestData: function(bookId){
+    var that=this;
+      wx.request({
+        url: 'http://www.kindlepush.com/m/auth/book/'+bookId,
+        method: 'POST',
+        header: {
+          'auth': wx.getStorageSync('auth')
+        },
+        success: function(res){
+          var tagsStr=res.data.book.tags;
+          var tags=tagsStr.replace('[', '').replace(']', '').split(',');
+          that.setData({
+            bookDetail: res.data,
+            tags: tags
+          })
+        },
+        fail: function(err){
+          console.log(err);
+        }
+      })
   },
 
   /**

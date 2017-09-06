@@ -23,11 +23,13 @@ Page({
         console.log(res.data)
         var categories=[];
         for (var i = 1; i < res.data.length; i++){
-          var category=categories[i];
-          var newCategory=category;
-          newCategory["imgUrl"] = i +"_112x112_@3x.png";
-          categories.add(newCategory);
+          var category={};
+          category["name"]=res.data[i].name;
+          var imgUrl = "/images/store/"+i +"_112x112_@3x.png";
+          category["imgUrl"]=imgUrl;
+          categories.push(category);
         };
+        // res.data.splice(0, 1);
         that.setData({
           categories: categories
         })
@@ -36,6 +38,14 @@ Page({
         console.log(err);
       }
     });
+  },
+  toBookList: function(event){
+    var categoryId = event.currentTarget.dataset.categoryid;
+    var categoryName = event.currentTarget.dataset.categoryname;
+    wx.navigateTo({
+      url: '/pages/allBook/allBook?categoryId=' + categoryId + '&categoryName=' + categoryName,
+    })
+
   },
 
   /**

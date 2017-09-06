@@ -1,41 +1,46 @@
-// mine.js
+// allBook.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    datas: [
-      [
-        { "name": "我的会员" },
-        { "name": "我的收藏" },
-        { "name": "推送记录" },
-        { "name": "最新活动" }
-      ],
-      [
-        { "name": "版本更新" },
-        { "name": "清空缓存" },
-        { "name": "夜间模式" }
-      ],
-      [
-        { "name": "使用帮助" },
-        { "name": "关于我们" }
-      ]
-    ]
+    allBooks: [],
   },
-  login: function (event) {
-    console.log(event);
-    wx.navigateTo({
-      url: 'login/login',
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var categoryId = options.categoryId;
+    var categoryName = options.categoryName;
 
+    this.requestData(categoryId);
+    wx.setNavigationBarTitle({
+      title: categoryName,
+    })
   },
-
+  requestData: function (categoryId) {
+    var that=this;
+    wx.request({
+      url: 'http://www.kindlepush.com/m/good/c/'+categoryId+'/1',
+      success: function (res) {
+        console.log(res.data);
+        that.setData({
+          allBooks: res.data
+        })
+      },
+      fail: function (err) {
+        console.log(err);
+      }
+    })
+  },
+  toDetail: function(event){
+    var book=event.currentTarget.dataset.book;
+    wx.navigateTo({
+      url: '/pages/bookDetail/bookDetail?book='+JSON.stringify(book),
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
